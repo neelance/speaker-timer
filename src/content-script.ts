@@ -26,11 +26,10 @@ const totalTime = (name: string): Ref<number> => {
 const showTimers = shallowRef(true);
 function setupPanel(panel: Element): void {
   const readDOM = () => {
-    const nameLabel = panel.querySelector(".XEazBc, .ZGDE");
-    const name = nameLabel?.firstChild?.nodeValue ?? null;
+    const nameLabel = panel.querySelector(".XEazBc, .ZGDE")?.querySelector('[jscontroller="e2jnoe"]') ?? null;
     return {
       nameLabel,
-      name,
+      name: nameLabel?.textContent ?? null,
       gaugeClass: panel.querySelector(".IisKdb")?.className ?? null,
     };
   };
@@ -47,8 +46,8 @@ function setupPanel(panel: Element): void {
 
   const timerLabel = shallowRef<HTMLDivElement | null>(null);
   effect(() => {
-    const { nameLabel } = domState.value;
-    if (nameLabel === null || nameLabel.shadowRoot !== null) {
+    const { nameLabel, name } = domState.value;
+    if (nameLabel === null || name === null || nameLabel.shadowRoot !== null) {
       return;
     }
     const shadow = nameLabel.attachShadow({ mode: "open" });
